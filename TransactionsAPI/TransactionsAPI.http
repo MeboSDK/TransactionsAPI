@@ -1,0 +1,6 @@
+@TransactionsAPI_HostAddress = https://localhost:44353
+
+GET {{TransactionsAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
