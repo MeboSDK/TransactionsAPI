@@ -14,9 +14,9 @@ public class Transaction : Entity
     public decimal Amount { get; set; }
     public DateTime Timestamp { get; set; }
 
-    [ForeignKey("SenderID")]
+    [ForeignKey("SenderUserId")]
     public virtual User Sender { get; set; }
 
-    [ForeignKey("ReceiverID")]
+    [ForeignKey("ReceiverUserId")]
     public virtual User Receiver { get; set; }
 }

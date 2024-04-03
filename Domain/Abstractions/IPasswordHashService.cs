@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Abstractions;
-public interface IUnitOfWork
+public interface IPasswordHashService
 {
-    Task<int> CommitAsync();
-
+    string HashPassword(string password);
+    bool VerifyPassword(string password, string hashedPassword);
 }

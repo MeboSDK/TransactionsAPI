@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Abstractions
+namespace Domain.Abstractions;
+public interface IRepository<T> where T : class
 {
-    public interface IRepository <T> where T : class
-    {
-        void Insert(T entity);
-        void Delete(T entity);
-        T Read(int Id);
-    }
+    void AddAsync(T entity);
+    void DeleteAsync(T entity);
+    Task<T> GetByIdAsync(int id);
 }
