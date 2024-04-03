@@ -3,4 +3,8 @@
 GET {{TransactionsAPI_HostAddress}}/weatherforecast/
 Accept: application/json
 
+
 ###
+
+GET {{TransactionsAPI_HostAddress}}/transaction/GetUser
+Accept: application/json

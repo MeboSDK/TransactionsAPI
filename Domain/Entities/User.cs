@@ -21,7 +21,7 @@ public class User : Entity
     [MaxLength(100)]
     public string Email { get; set; }
 
-    public string Hashedassword { get; set; }
+    public string HashedPassword { get; set; }
 
     public virtual ICollection<Transaction> Transactions { get; set; }
 

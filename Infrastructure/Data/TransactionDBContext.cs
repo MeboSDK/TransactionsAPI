@@ -22,6 +22,5 @@ public class TransactionDBContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfiguration(new TransactionConfiguration());
-        
     }
 }

@@ -8,10 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Servicies.UnitOfWork;
-public class UnitOfWork : IUnitOfWork, IDisposable
+public class UnitOfWork : IUnitOfWork
 {
     private readonly TransactionDBContext _dbContext;
-    private bool _disposed;
 
     public UnitOfWork(TransactionDBContext dbContext)
     {
@@ -20,30 +19,19 @@ public class UnitOfWork : IUnitOfWork, IDisposable
 
     public async Task<int> CommitAsync()
     {
-        return await _dbContext.SaveChangesAsync();
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (!_disposed)
+        using (var transaction = _dbContext.Database.BeginTransaction())
         {
-            if (disposing)
+            try
             {
-                _dbContext.Dispose();
+                int result = await _dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return result;
             }
-
-            _disposed = true;
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
-    }
-
-    ~UnitOfWork()
-    {
-        Dispose(false);
     }
 }
