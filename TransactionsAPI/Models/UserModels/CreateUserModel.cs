@@ -1,6 +1,6 @@
-﻿namespace TransactionsAPI.Models;
+﻿namespace TransactionsAPI.Models.UserModels;
 
-public class UserModel
+public class CreateUserModel
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }

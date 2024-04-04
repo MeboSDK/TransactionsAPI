@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Servicies.UnitOfWork;
+namespace Infrastructure.Data.Servicies.UnitOfWork;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly TransactionDBContext _dbContext;

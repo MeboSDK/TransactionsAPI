@@ -3,9 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Domain.Abstractions;
-using Infrastructure.Servicies;
-using Infrastructure.Servicies.Repositories;
-using Infrastructure.Servicies.UnitOfWork;
+using Infrastructure.Data.Servicies;
+using Infrastructure.Data.Servicies.Repositories;
+using Infrastructure.Data.Servicies.UnitOfWork;
 
 namespace Infrastructure;
 

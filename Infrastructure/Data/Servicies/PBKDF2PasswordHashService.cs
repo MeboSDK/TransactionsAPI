@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Servicies;
+namespace Infrastructure.Data.Servicies;
 
 public class PBKDF2PasswordHashService : IPasswordHashService
 {

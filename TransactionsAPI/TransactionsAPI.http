@@ -1,10 +1,6 @@
 @TransactionsAPI_HostAddress = https://localhost:44353
 
-GET {{TransactionsAPI_HostAddress}}/weatherforecast/
+GET {{TransactionsAPI_HostAddress}}/Users/GetUsers
 Accept: application/json
-
 
 ###
-
-GET {{TransactionsAPI_HostAddress}}/transaction/GetUser
-Accept: application/json

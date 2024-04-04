@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Commands
+namespace Application.Commands.UserCommands
 {
     public class AddUserCommandHandler : IRequestHandler<AddUserCommand>
     {
         private readonly IRepository<User> _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPasswordHashService _passwordHashService;
-        public AddUserCommandHandler(IRepository<User> userRepository, 
+        public AddUserCommandHandler(IRepository<User> userRepository,
                                      IUnitOfWork unitOfWork,
                                      IPasswordHashService passwordHashService)
         {
