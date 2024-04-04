@@ -11,18 +11,18 @@ namespace TransactionsAPI.Controllers;
 [Route("[controller]/[action]")]
 public class UsersController : ControllerBase
 {
-    private readonly IMediator _mediatR;
-    public UsersController(IMediator mediatR)
+    private readonly IMediator _mediator;
+    public UsersController(IMediator mediator)
     {
-        _mediatR = mediatR;
+        _mediator = mediator;
     }
 
-    [HttpGet]
+    [HttpGet("{id}")]
     public async Task<ReadUserModel> GetUser(int id)
     {
         GetUserByIdQuery getUserByIdQuery = new GetUserByIdQuery(id);
 
-        var user = await _mediatR.Send(getUserByIdQuery);
+        var user = await _mediator.Send(getUserByIdQuery);
 
         if (user is null)
             return default;
@@ -42,9 +42,9 @@ public class UsersController : ControllerBase
     [HttpGet]
     public async Task<IEnumerable<ReadUserModel>> GetUsers()
     {
-        GetAllUserQuery getAllUserQuery = new GetAllUserQuery();
+        GetAllUsersQuery getAllUserQuery = new GetAllUsersQuery();
 
-        var users = await _mediatR.Send(getAllUserQuery);
+        var users = await _mediator.Send(getAllUserQuery);
 
         if (users is null)
             return default;
@@ -68,8 +68,8 @@ public class UsersController : ControllerBase
     }
 
 
-    [HttpPost(Name = "CreateUser")]
-    public async Task<ActionResult> Create(CreateUserModel model)
+    [HttpPost]
+    public async Task<ActionResult> CreateUser(CreateUserModel model)
     {
         try
         {
@@ -78,7 +78,7 @@ public class UsersController : ControllerBase
                                                                model.Email,
                                                                model.Password);
 
-            await _mediatR.Send(addUserCommand);
+            await _mediator.Send(addUserCommand);
 
             return Ok();
         }
@@ -88,14 +88,14 @@ public class UsersController : ControllerBase
         }
     }
 
-    [HttpPost]
+    [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(int id)
     {
         try
         {
             DeleteUserCommand deleteUserCommand = new DeleteUserCommand(id);
 
-            await _mediatR.Send(deleteUserCommand);
+            await _mediator.Send(deleteUserCommand);
 
             return Ok();
         }

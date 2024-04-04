@@ -20,7 +20,7 @@ public static class DependencyInjection
 
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddScoped<IPasswordHashService,PBKDF2PasswordHashService>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }

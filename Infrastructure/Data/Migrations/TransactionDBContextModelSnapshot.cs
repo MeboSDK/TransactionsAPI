@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(TransactionDBContext))]
     partial class TransactionDBContextModelSnapshot : ModelSnapshot
@@ -39,7 +39,7 @@ namespace Infrastructure.Migrations
                     b.Property<int>("SenderUserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Timestamp")
+                    b.Property<DateTime>("TimestampUTC")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")

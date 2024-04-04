@@ -11,10 +11,10 @@ namespace Application.Commands.UserCommands
 {
     public class AddUserCommandHandler : IRequestHandler<AddUserCommand>
     {
-        private readonly IRepository<User> _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPasswordHashService _passwordHashService;
-        public AddUserCommandHandler(IRepository<User> userRepository,
+        public AddUserCommandHandler(IUserRepository userRepository,
                                      IUnitOfWork unitOfWork,
                                      IPasswordHashService passwordHashService)
         {
@@ -24,6 +24,9 @@ namespace Application.Commands.UserCommands
         }
         public async Task Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
+            if(!await _userRepository.IsEmailUniqueAsync(request.Email))
+                throw new Exception("Email exists");
+            
             User user = new User
             {
                 FirstName = request.FirstName,

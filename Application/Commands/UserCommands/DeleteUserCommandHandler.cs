@@ -11,10 +11,10 @@ namespace Application.Commands.UserCommands;
 
 public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand>
 {
-    public readonly IRepository<User> _repository;
+    public readonly IUserRepository _repository;
     public readonly IUnitOfWork _unitOfWork;
     public DeleteUserCommandHandler(
-        IRepository<User> repository,
+        IUserRepository repository,
         IUnitOfWork unitOfWork)
     {
         _repository = repository;

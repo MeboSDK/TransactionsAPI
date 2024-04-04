@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 namespace Infrastructure.Data.Servicies.Repositories;
 public class Repository<T> : IRepository<T> where T : Entity
 {
-    private readonly TransactionDBContext _dbContext;
-    private readonly DbSet<T> _dbSet;
+    protected readonly TransactionDBContext _dbContext;
+    protected readonly DbSet<T> _dbSet;
 
     public Repository(TransactionDBContext dbContext)
     {
@@ -21,17 +21,17 @@ public class Repository<T> : IRepository<T> where T : Entity
         _dbSet = _dbContext.Set<T>();
     }
 
-    public async Task AddAsync(T entity)
+    public virtual async Task AddAsync(T entity)
     {
         await _dbSet.AddAsync(entity);
     }
 
-    public void Delete(T entity)
+    public virtual void Delete(T entity)
     {
         _dbSet.Remove(entity);
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null)
+    public virtual async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null)
     {
         IQueryable<T> query = _dbSet;
 
@@ -43,7 +43,7 @@ public class Repository<T> : IRepository<T> where T : Entity
         return await query.ToListAsync();
     }
 
-    public async Task<T> GetByIdAsync(int id)
+    public virtual async Task<T> GetByIdAsync(int id)
     {
         return await _dbSet.FindAsync(id);
     }

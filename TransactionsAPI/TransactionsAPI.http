@@ -4,3 +4,6 @@ GET {{TransactionsAPI_HostAddress}}/Users/GetUsers
 Accept: application/json
 
 ###
+
+GET {{TransactionsAPI_HostAddress}}/Api/Transactions
+Accept: application/json

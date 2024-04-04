@@ -6,14 +6,15 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Data.Servicies;
+namespace Application.Servicies;
 
-public class PBKDF2PasswordHashService : IPasswordHashService
+public class PasswordHashService : IPasswordHashService
 {
     private const int SaltSize = 16;
     private const int HashSize = 20;
     private const int Iterations = 10000;
-
+    
+    //PBKDF2
     public string HashPassword(string password)
     {
         byte[] salt;

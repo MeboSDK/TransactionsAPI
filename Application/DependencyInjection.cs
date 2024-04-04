@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Application.Servicies;
+using Domain.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +14,13 @@ public static class DependencyInjection
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         var assembly = typeof(DependencyInjection).Assembly;
+
         services.AddMediatR(conf =>
         {
             conf.RegisterServicesFromAssembly(assembly);
         });
+
+        services.AddScoped<IPasswordHashService, PasswordHashService>();
 
         return services;
     }

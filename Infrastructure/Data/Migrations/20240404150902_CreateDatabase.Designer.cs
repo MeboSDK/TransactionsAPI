@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(TransactionDBContext))]
-    [Migration("20240404085208_FixNameOfHashPassword")]
-    partial class FixNameOfHashPassword
+    [Migration("20240404150902_CreateDatabase")]
+    partial class CreateDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,7 +42,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int>("SenderUserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Timestamp")
+                    b.Property<DateTime>("TimestampUTC")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")

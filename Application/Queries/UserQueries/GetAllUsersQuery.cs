@@ -7,7 +7,6 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Queries.UserQueries
-{
-    public record GetAllUserQuery(Expression<Func<User, bool>> filter = null) : IRequest<IEnumerable<User>>;
-}
+namespace Application.Queries.UserQueries;
+
+public record GetAllUsersQuery(Expression<Func<User, bool>> filter = null) : IRequest<IEnumerable<User>>;
