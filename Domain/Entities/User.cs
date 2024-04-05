@@ -22,7 +22,4 @@ public class User : Entity
     public string Email { get; set; }
 
     public string HashedPassword { get; set; }
-
-    public virtual ICollection<Transaction> Transactions { get; set; }
-
 }

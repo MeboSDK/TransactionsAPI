@@ -11,9 +11,9 @@ namespace Application.Queries.UserQueries
         {
             _userRepository = userRepository;
         }
-        public async Task<User> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+        public Task<User> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            return await _userRepository.GetByIdAsync(request.Id);
+            return _userRepository.GetByIdAsync(request.Id);
         }
     }
 }

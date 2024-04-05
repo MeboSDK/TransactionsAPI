@@ -3,6 +3,7 @@ using MediatR;
 using Application.Queries.TransactionQueries;
 using TransactionsAPI.Models.TransactionModels;
 using Application.Commands.TransactionCommands;
+using TransactionsAPI.Abstractions;
 
 namespace TransactionsAPI.Controllers
 {
@@ -11,41 +12,19 @@ namespace TransactionsAPI.Controllers
     public class TransactionsController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ITransactionsService _transactionsService;
 
-        public TransactionsController(IMediator mediator)
+        public TransactionsController(IMediator mediator, ITransactionsService transactionsService)
         {
             _mediator = mediator;
+            _transactionsService = transactionsService;
         }
 
         [HttpGet]
         [Route("GetTransactions")]
         public async Task<IEnumerable<ReadTransactionModel>> GetTransactions()
         {
-            GetAllTransactionsQuery getAllTransactionsQuery = new GetAllTransactionsQuery();
-
-            var transactions = await _mediator.Send(getAllTransactionsQuery);
-
-            if (transactions is null)
-                return default;
-
-            List<ReadTransactionModel> transactionsModels = new();
-
-            foreach (var transaction in transactions)
-            {
-                ReadTransactionModel userModel = new ReadTransactionModel()
-                {
-                    Id = transaction.Id,
-                    SenderEmail = transaction.Sender.FirstName,
-                    ReceiverEmail = transaction.Receiver.Email,
-                    Amount = transaction.Amount,
-                    TimeStampUTC = transaction.TimestampUTC
-                };
-
-                transactionsModels.Add(userModel);
-            }
-
-            return transactionsModels;
-
+            return await _transactionsService.GetAllTransactionsAsync();
         }
 
         [HttpPost]

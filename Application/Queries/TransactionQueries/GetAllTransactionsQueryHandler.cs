@@ -12,9 +12,11 @@ namespace Application.Queries.TransactionQueries;
 public class GetAllUsersQueryHandler : IRequestHandler<GetAllTransactionsQuery, IEnumerable<Transaction>>
 {
     private readonly IRepository<Transaction> _transactionRepository;
-    public GetAllUsersQueryHandler(IRepository<Transaction> transactionRepository)
+    private readonly IMediator _mediator;
+    public GetAllUsersQueryHandler(IRepository<Transaction> transactionRepository, IMediator mediator)
     {
         _transactionRepository = transactionRepository;
+        _mediator = mediator;
     }
 
     public Task<IEnumerable<Transaction>> Handle(GetAllTransactionsQuery request, CancellationToken cancellationToken)
