@@ -28,21 +28,7 @@ namespace Application.Commands.TransactionCommands
         {
             var senderUser = await _userRepository.FindByEmailAsync(request.SenderEmail);
 
-            if(senderUser == null)
-                throw new Exception("Sender email or password is not correct.");
-
-            var verifiedPassword = _passwordHashService.VerifyPassword(request.Password, senderUser.HashedPassword);
-
-            if(!verifiedPassword)
-                throw new Exception("Sender email or password is not correct.");
-
             var receiverUser = await _userRepository.FindByEmailAsync(request.ReceiverEmail);
-
-            if (receiverUser == null)
-                throw new Exception("Receiver email doesn't not exists.");
-
-            if(senderUser.Email == receiverUser.Email)
-                throw new Exception("You can't send money to your self!");
 
             Transaction transaction = new()
             {

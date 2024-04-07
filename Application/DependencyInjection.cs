@@ -1,5 +1,6 @@
 ﻿using Application.Servicies;
 using Domain.Abstractions;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,8 @@ public static class DependencyInjection
         });
 
         services.AddScoped<IPasswordHashService, PasswordHashService>();
+
+        services.AddValidatorsFromAssembly(assembly);
 
         return services;
     }

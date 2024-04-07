@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Commands.UserCommands
+namespace Application.Commands.UserCommands.Commands
 {
-   public record DeleteUserCommand(int Id) : IRequest;
+    public record DeleteUserCommand(int Id) : IRequest;
 }

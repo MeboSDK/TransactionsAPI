@@ -2,9 +2,10 @@
 using MediatR;
 using System.Collections.Generic;
 using Application.Queries.UserQueries;
-using Application.Commands.UserCommands;
 using Domain.Entities;
 using TransactionsAPI.Models.UserModels;
+using FluentValidation;
+using Application.Commands.UserCommands.Commands;
 namespace TransactionsAPI.Controllers;
 
 [ApiController]
@@ -12,9 +13,12 @@ namespace TransactionsAPI.Controllers;
 public class UsersController : ControllerBase
 {
     private readonly IMediator _mediator;
-    public UsersController(IMediator mediator)
+    private readonly IValidator<AddUserCommand> _validator;
+
+    public UsersController(IMediator mediator,IValidator<AddUserCommand> validator)
     {
         _mediator = mediator;
+        _validator = validator;
     }
 
     [HttpGet("{id}")]
@@ -69,23 +73,22 @@ public class UsersController : ControllerBase
 
 
     [HttpPost]
-    public async Task<ActionResult> CreateUser(CreateUserModel model)
+    public async Task<IResult> CreateUser(CreateUserModel model)
     {
-        try
-        {
-            AddUserCommand addUserCommand = new AddUserCommand(model.FirstName,
+
+            AddUserCommand command = new AddUserCommand(model.FirstName,
                                                                model.LastName,
                                                                model.Email,
                                                                model.Password);
 
-            await _mediator.Send(addUserCommand);
+            var result = await _validator.ValidateAsync(command);
 
-            return Ok();
-        }
-        catch(Exception e)
-        {
-            return Problem(e.Message);
-        }
+            if (!result.IsValid)
+                return Results.ValidationProblem(result.ToDictionary());
+
+            await _mediator.Send(command);
+
+            return Results.Ok();
     }
 
     [HttpDelete("{id}")]

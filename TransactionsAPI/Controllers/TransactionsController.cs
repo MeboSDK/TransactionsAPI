@@ -4,6 +4,7 @@ using Application.Queries.TransactionQueries;
 using TransactionsAPI.Models.TransactionModels;
 using Application.Commands.TransactionCommands;
 using TransactionsAPI.Abstractions;
+using FluentValidation;
 
 namespace TransactionsAPI.Controllers
 {
@@ -13,11 +14,12 @@ namespace TransactionsAPI.Controllers
     {
         private readonly IMediator _mediator;
         private readonly ITransactionsService _transactionsService;
-
-        public TransactionsController(IMediator mediator, ITransactionsService transactionsService)
+        private readonly IValidator<AddTransactionCommand> _validator;
+        public TransactionsController(IMediator mediator, ITransactionsService transactionsService, IValidator<AddTransactionCommand> validator = null)
         {
             _mediator = mediator;
             _transactionsService = transactionsService;
+            _validator = validator;
         }
 
         [HttpGet]
@@ -29,23 +31,23 @@ namespace TransactionsAPI.Controllers
 
         [HttpPost]
         [Route("CreateTransaction")]
-        public async Task<ActionResult> CreateTransaction(CreateTransactionModel model)
+        public async Task<IResult> CreateTransaction(CreateTransactionModel model)
         {
-            try
-            {
-                AddTransactionCommand addTransactionCommand = new(model.SenderEmail,
+
+                AddTransactionCommand command = new(model.SenderEmail,
                                                               model.Password,
                                                               model.ReceiverEmail,
                                                               model.Amount);
 
+                var result = await _validator.ValidateAsync(command);
 
-                await _mediator.Send(addTransactionCommand);
-                return Ok();
-            }
-            catch(Exception e)
-            {
-                return Problem(e.Message);
-            }
+                if (!result.IsValid)
+                    return Results.ValidationProblem(result.ToDictionary());
+
+                await _mediator.Send(command);
+
+                return Results.Ok();
+       
         }
     }
 }

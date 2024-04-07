@@ -1,4 +1,5 @@
-﻿using Domain.Abstractions;
+﻿using Application.Commands.UserCommands.Commands;
+using Domain.Abstractions;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Commands.UserCommands;
+namespace Application.Commands.UserCommands.Handlers;
 
 public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand>
 {

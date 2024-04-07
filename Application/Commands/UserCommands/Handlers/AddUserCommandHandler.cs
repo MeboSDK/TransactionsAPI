@@ -1,4 +1,5 @@
-﻿using Domain.Abstractions;
+﻿using Application.Commands.UserCommands.Commands;
+using Domain.Abstractions;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Commands.UserCommands
+namespace Application.Commands.UserCommands.Handlers
 {
     public class AddUserCommandHandler : IRequestHandler<AddUserCommand>
     {
@@ -24,9 +25,9 @@ namespace Application.Commands.UserCommands
         }
         public async Task Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
-            if(!await _userRepository.IsEmailUniqueAsync(request.Email))
+            if (!await _userRepository.IsEmailUniqueAsync(request.Email))
                 throw new Exception("Email exists");
-            
+
             User user = new User
             {
                 FirstName = request.FirstName,
